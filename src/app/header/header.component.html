@@ -1,0 +1,16 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">Video Streaming App</a>
+    <div *ngIf="!isAuthenticated">
+        <button class="btn btn-outline-success my-1 mr-sm-2"
+         (click)="onLoginShow()">Login</button>
+        <button class="btn btn-outline-success my-1 my-sm-0"
+         (click)="onSignupShow()">Signup</button>
+    </div>
+    <div *ngIf="isAuthenticated">
+        <button class="btn btn-outline-success my-1 mr-sm-2"
+         (click)="onLogout()">Settings</button>
+        <button class="btn btn-outline-success my-1 my-sm-0"
+         (click)="onLogout()">Logout</button>
+    </div>
+
+</nav>
