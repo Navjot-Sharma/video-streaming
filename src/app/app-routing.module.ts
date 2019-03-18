@@ -1,4 +1,4 @@
-import { PlaylistComponent } from './admin-panel/playlist/playlist.component';
+import { EditPlaylistComponent } from './admin-panel/edit-playlist/edit-playlist.component';
 import { GeneralComponent } from './admin-panel/general/general.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { Route, RouterModule } from '@angular/router';
@@ -10,7 +10,7 @@ const routes: Route[] = [
   {path: '', component: StreamComponent},
   {path: 'settings', component: AdminPanelComponent, children: [
     {path: 'general', component: GeneralComponent},
-    {path: 'playlist/:id', component: PlaylistComponent},
+    {path: 'editPlaylist/:id', component: EditPlaylistComponent},
   ]}
 ];
 

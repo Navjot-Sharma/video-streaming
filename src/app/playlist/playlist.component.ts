@@ -2,11 +2,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-menus',
-  templateUrl: './menus.component.html',
-  styleUrls: ['./menus.component.css']
+  selector: 'app-playlist',
+  templateUrl: './playlist.component.html',
+  styleUrls: ['./playlist.component.css']
 })
-export class MenusComponent implements OnInit {
+export class PlaylistComponent  implements OnInit {
 
   searchForm: FormGroup;
 
@@ -19,5 +19,4 @@ export class MenusComponent implements OnInit {
       search: new FormControl(null)
     });
   }
-
 }

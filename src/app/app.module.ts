@@ -26,8 +26,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DialogComponent } from './dialog/dialog.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { GeneralComponent } from './admin-panel/general/general.component';
-import { PlaylistComponent } from './admin-panel/playlist/playlist.component';
+import { EditPlaylistComponent } from './admin-panel/edit-playlist/edit-playlist.component';
 import { AuthComponent } from './auth/auth.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -38,8 +39,9 @@ import { AuthComponent } from './auth/auth.component';
     DialogComponent,
     AdminPanelComponent,
     GeneralComponent,
-    PlaylistComponent,
-    AuthComponent
+    EditPlaylistComponent,
+    AuthComponent,
+    PlaylistComponent
   ],
   imports: [
     FormsModule,

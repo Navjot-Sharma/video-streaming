@@ -21,7 +21,7 @@
         <mat-divider></mat-divider>
         <h3 matSubheader>Playlists</h3>
         <mat-list-item *ngFor="let note of [1, 2, 3]; let id = index"
-        [routerLink]="['/settings/playlist', id]"
+        [routerLink]="['/settings/editPlaylist', id]"
         routerLinkActive="active">
           <mat-icon matListIcon>queue_music</mat-icon>
           <h4 matLine>playlist.name</h4>
