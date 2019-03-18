@@ -1,0 +1,22 @@
+.grid1, .grid2 {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: baseline;
+}
+.grid1 {
+  grid-gap: 1.7rem 1rem; 
+}
+mat-card {
+  padding: 3rem;
+  margin: 1.5rem;
+}
+section {
+  display: grid;
+  grid-template-columns: 40% 40%;
+}
+button {
+  grid-column: span 2;
+  width: 30%;
+  margin: auto;
+}

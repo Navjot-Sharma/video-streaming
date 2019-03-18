@@ -22,11 +22,11 @@ router.post('/login', async (req, res) => {
   try {
     console.log(req.body.password);
     const result = await User.findOne({email: req.body.email});
-    if (!result) throw new Error(`User id not found`);
+    if (!result) throw new Error(`User id or password didn't match`);
 
     const isMatched = await bcrypt.compare(req.body.password, result.password);
-    if (!isMatched) throw new Error(`Password didn't matched`);
-
+    if (!isMatched) throw new Error(`User id or password didn't match`);
+//try Delete Here Today delete Result.password
     const user = {
       _id: result._id,
       name: result.name,

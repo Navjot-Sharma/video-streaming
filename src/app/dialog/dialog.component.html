@@ -2,4 +2,10 @@
 <div mat-dialog-content>
   <p>{{ data.message }}</p>
 </div>
-<button mat-button mat-dialog-close>Ok</button>
+<mat-form-field *ngIf="data.input">
+  <input matInput placeholder="Playlist name" type="text" [(ngModel)]="input">
+</mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="input">Ok</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+</div>

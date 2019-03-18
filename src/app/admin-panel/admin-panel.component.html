@@ -1,0 +1,47 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <div class="details">
+      <p>
+        <i class="fas fa-user-circle"></i>
+        John Doe
+      </p>
+      <p>navi@g.com</p>
+    </div>
+    <section class="sections">
+      <mat-list>
+        <h3 matSubheader>Settings</h3>
+        <mat-list-item
+          *ngFor="let folder of [1]"
+          [routerLink]="['/settings/general']"
+          routerLinkActive="active"
+        >
+          <mat-icon matListIcon>settings</mat-icon>
+          <h4 matLine>General</h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>Playlists</h3>
+        <mat-list-item *ngFor="let note of [1, 2, 3]; let id = index"
+        [routerLink]="['/settings/playlist', id]"
+        routerLinkActive="active">
+          <mat-icon matListIcon>queue_music</mat-icon>
+          <h4 matLine>playlist.name</h4>
+        </mat-list-item>
+        <h3 matSubheader>Options</h3>
+        <mat-list-item (click)="onCreatePlaylist()">
+          <mat-icon matListIcon>playlist_add</mat-icon>
+          <h4 matLine>Create Playlist</h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>Information</h3>
+        <mat-list-item>
+          <mat-icon matListIcon>group</mat-icon>
+          <h4 matLine>About Us</h4>
+        </mat-list-item>
+      </mat-list>
+    </section>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- <h2>Welcome Admin!</h2> -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

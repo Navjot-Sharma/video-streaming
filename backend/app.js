@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 
 app.use('', streamsRouter);
 app.use('/youStream', youStreamsRouter);
-app.use('/git', gitStreamRouter);
+app.use('/api/git', gitStreamRouter);
 app.use('/api/users', usersRouter);
 
 mongoose.connect(prod.mongodb, {

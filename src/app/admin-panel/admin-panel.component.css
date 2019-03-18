@@ -1,0 +1,31 @@
+mat-card {
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+}
+mat-sidenav-container {
+  height: 100%;
+}
+mat-sidenav {
+  background: #e6e6e6;
+  width: 14rem;
+}
+mat-sidenav-content {
+  background: #ffffff;
+  padding: 1rem;
+}
+.details {
+  background: #272727;
+  margin: 0;
+  padding: 1rem 4rem;
+  color: #ffffff;
+}
+.sections mat-list-item {
+  cursor: pointer;
+}
+.active {
+  background: #ffffff;
+}
+/* .active {
+  background: #272727;
+  color: #ffffff;
+} */

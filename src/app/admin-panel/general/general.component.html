@@ -1,0 +1,34 @@
+<section>
+  <mat-card>
+    <mat-card-title>Personal Information</mat-card-title>
+    <div class="grid1">
+      <p>Name :</p>
+      <p>John Doe</p>
+      <p>E-mail :</p>
+      <p>nav@g.com</p>
+      <p>Password :</p>
+      <p>***********</p>
+      <button mat-button (click)="showUpdateInfo = !showUpdateInfo">Change</button>
+    </div>
+  </mat-card>
+  <mat-card *ngIf="showUpdateInfo">
+    <mat-card-title>Update Information</mat-card-title>
+    <div class="grid2">
+      <!-- <form> -->
+      <p>Name :</p>
+      <mat-form-field>
+        <input matInput value="Sushi" />
+      </mat-form-field>
+      <p>E-mail :</p>
+      <mat-form-field>
+        <input matInput value="Sushi" />
+      </mat-form-field>
+      <p>Confirm Password :</p>
+      <mat-form-field>
+        <input matInput value="Sushi" />
+      </mat-form-field>
+      <button mat-button>Update</button>
+      <!-- </form> -->
+    </div>
+  </mat-card>
+</section>

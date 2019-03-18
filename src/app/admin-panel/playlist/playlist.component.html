@@ -1,0 +1,17 @@
+<mat-list>
+  <h3>Add new video</h3>
+  <mat-form-field>
+    <input matInput type="text" />
+  </mat-form-field>
+  <button mat-button>Add</button>
+  <mat-divider></mat-divider>
+  <h3 mat-subheader>Videos</h3>
+  <mat-list-item *ngFor="let folder of [1, 2, 3]; last as last">
+    <mat-icon mat-list-icon>video_library</mat-icon>
+    <h4 mat-line>folder.name</h4>
+    <p mat-line class="demo-2">folder.updated</p>
+    <i class="fas fa-times" matTooltip="Remove video"></i>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>

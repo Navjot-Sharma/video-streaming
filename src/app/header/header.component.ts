@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { AuthService } from '../shared/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Component, OnInit, OnDestroy,  } from '@angular/core';
 
 @Component({
@@ -7,7 +7,7 @@ import { Component, OnInit, OnDestroy,  } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuthenticated = false;
   authSub: Subscription;

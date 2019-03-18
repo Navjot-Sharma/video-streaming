@@ -1,12 +1,12 @@
-import { User } from './../user.model';
+import { User } from '../shared/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { environment as env } from '../../../environments/environment';
-import { MatDialog } from '@angular/material';
-import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { environment as env } from '../../environments/environment';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -14,12 +14,13 @@ export class AuthService {
   private user: User;
   private isAuthenticated = false;
   private token: string;
-  private showLoginSub = new Subject<{status: boolean, index?: number}>();
+  private showLoginSub = new Subject<{status: boolean, index?: number, message?: string}>();
   private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient,
               private router: Router,
-              private dialog: MatDialog) {}
+              private dialog: MatDialog,
+              private snackbar: MatSnackBar) {}
 
   getLoginSub() {
     return this.showLoginSub;
@@ -46,7 +47,7 @@ export class AuthService {
        this.saveAuthData(response.token);
        this.showLoginSub.next({status: false});
        this.authStatusListener.next(true);
-     });
+     }, error => this.showLoginSub.next({status: true, message: error.error}));
   }
 
   login(body) {
@@ -58,18 +59,24 @@ export class AuthService {
         this.saveAuthData(response.token);
         this.showLoginSub.next({status: false});
         this.authStatusListener.next(true);
+        this.snackbar.open('You have been logged in', 'Ok', {duration: 2000});
      }, (error) => {
-       console.log(error);
-      this.dialog.open(DialogComponent, {data:
-        {result: 'Failed', message: error.error}});
+       console.log(error.error);
+        this.showLoginSub.next({status: true, message: error.error});
      });
   }
 
   logout() {
-    this.clearAuthData();
-    this.isAuthenticated = false;
-    this.authStatusListener.next(false);
-    this.router.navigate(['/']);
+    const dialogRef = this.dialog.open(DialogComponent, {data: {result: 'Confirm?', message: 'Are you sure?'}});
+    dialogRef.afterClosed().subscribe( response => {
+      if (response) {
+        this.clearAuthData();
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        this.router.navigate(['/']);
+        this.snackbar.open('You have been logged out', 'Ok', {duration: 2000});
+      }
+    });
   }
 
   saveAuthData(token) {
