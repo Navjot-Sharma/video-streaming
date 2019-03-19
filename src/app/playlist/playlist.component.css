@@ -1,21 +1,17 @@
-ul {
-  list-style: none;
-  padding: 0.4rem;
-}
-form mat-icon {
-  margin: 0 0.8rem;
-  cursor: pointer;
-  color: #ffffff;
-}
-form {
-  background: #272727;
-  padding: 0.8rem;
-}
 section {
-  max-height: 30rem;
+  max-height: 100%;
   padding: 1rem;
   overflow: auto;
 }
-mat-accordian {
-  width: 100%;
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+} 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

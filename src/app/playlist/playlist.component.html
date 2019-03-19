@@ -1,17 +1,20 @@
 <section>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let playlist of [1, 2, 3]" hideToggle>
+    <mat-expansion-panel
+     *ngFor="let playlist of [1, 2, 3, 4, 5]; first as first"
+     hideToggle [expanded]="first">
       <mat-expansion-panel-header>
         Playlist1
       </mat-expansion-panel-header>
       <mat-list>
-        <mat-list-item *ngFor="let folder of [1, 2, 3]; last as last">
+        <mat-list-item
+          *ngFor="let folder of [1, 2, 3, 4, 5, 6, 7, 8, 9]; last as last">
           <mat-icon mat-list-icon>music_video</mat-icon>
           <h4 mat-line>video name</h4>
           <mat-divider *ngIf="!last"></mat-divider>
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
-    </mat-expansion-panel> </mat-accordion
-  >
+    </mat-expansion-panel>
+  </mat-accordion>
 </section>

@@ -16,11 +16,20 @@ export class AuthService {
   private token: string;
   private showLoginSub = new Subject<{status: boolean, index?: number, message?: string}>();
   private authStatusListener = new Subject<boolean>();
+  private userSub = new Subject<User>();
 
   constructor(private http: HttpClient,
               private router: Router,
               private dialog: MatDialog,
               private snackbar: MatSnackBar) {}
+
+
+  get User() {
+    return this.user;
+  }
+  getUserSub() {
+    return this.userSub.asObservable();
+  }
 
   getLoginSub() {
     return this.showLoginSub;
@@ -37,11 +46,6 @@ export class AuthService {
   createAccount(body) {
     this.http.post<{user: User, token: string, error: string}>(env.url + 'users/signup', body)
      .subscribe( response => {
-       if (response.error) {
-        this.dialog.open(DialogComponent, {data:
-          {result: 'Failed', message: response.error}});
-        return;
-       }
        this.user = response.user;
        this.isAuthenticated = true;
        this.saveAuthData(response.token);
@@ -66,6 +70,19 @@ export class AuthService {
      });
   }
 
+  updateAccount(body) {
+    this.http.put<{user: User, token: string}>(env.url + 'users/' + this.user._id, body)
+     .subscribe( response => {
+      this.user = response.user;
+      this.saveAuthData(response.token);
+      this.userSub.next(this.user);
+      this.snackbar.open('Your account has been updated', 'Ok', {duration: 2000});
+   }, (error) => {
+     console.log(error.error);
+      this.showLoginSub.next({status: true, message: error.error});
+   });
+  }
+
   logout() {
     const dialogRef = this.dialog.open(DialogComponent, {data: {result: 'Confirm?', message: 'Are you sure?'}});
     dialogRef.afterClosed().subscribe( response => {
@@ -79,6 +96,9 @@ export class AuthService {
     });
   }
 
+
+
+  // local storage data manipulations
   saveAuthData(token) {
     this.token = token;
     localStorage.setItem('vsa_token', token);

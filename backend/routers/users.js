@@ -75,6 +75,38 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+    if (!user) throw new Error(`User id or password didn't match`);
+
+    const isMatched = await bcrypt.compare(req.body.password, user.password);
+    if (!isMatched) throw new Error(`User id or password didn't match`);
+
+    const updates = {
+      email: req.body.email,
+      name: req.body.name,
+    };
+    console.log('updates', updates);
+
+    result = await User.findByIdAndUpdate(req.params.id, {$set: updates}, {new: true});
+    
+    user = {
+      _id: result._id,
+      name: result.name,
+      email: result.email,
+      authId: result.authId
+    }
+
+    console.log('user', user);
+    const token = jwt.sign(user, prod.jwt, {expiresIn: '72h'});
+    res.status(200).json({user, token});
+  } catch(err) {
+    console.log(err);
+    res.status(400).json({err: err.message});
+  }
+});
+
 router.delete('/:id', checkAuth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

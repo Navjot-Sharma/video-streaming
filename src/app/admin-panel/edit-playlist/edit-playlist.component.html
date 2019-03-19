@@ -1,9 +1,11 @@
+<h3>Add new video</h3>
+<mat-form-field>
+  <input matInput type="text"  value="https://www.youtube.com/watch?v="/>
+</mat-form-field>
+<button mat-button>Add</button>
+<mat-divider [vertical]="true"></mat-divider>
+
 <mat-list>
-  <h3>Add new video</h3>
-  <mat-form-field>
-    <input matInput type="text" />
-  </mat-form-field>
-  <button mat-button>Add</button>
   <mat-divider></mat-divider>
   <h3 mat-subheader>Videos</h3>
   <mat-list-item *ngFor="let folder of [1, 2, 3]; last as last">
@@ -15,3 +17,4 @@
   </mat-list-item>
   <mat-divider></mat-divider>
 </mat-list>
+ 

@@ -9,43 +9,44 @@ router.get("", (req, res) => {
     // const url = 'https://youtube.com/embed/LPhqL4DqzBg';
     console.log('try');
     const r = request(
-      url, (err, response, body) => {
-        if (err | response.statusCode !== 200)  throw new Error('something went wrong', err);
+      url);
+    //   , (err, response, body) => {
+    //     if (err | response.statusCode !== 200)  throw new Error('something went wrong', err);
 
-        body = qs.parse(body);
-        if(body.status.indexOf('ok') == -1){
-          res.end(body.reason);
-        }
+    //     body = qs.parse(body);
+    //     if(body.status.indexOf('ok') == -1){
+    //       res.end(body.reason);
+    //     }
 
-        console.log('status', response.statusCode);
-        console.log('body status', body.status);
-        console.log('title', body.title);
+    //     console.log('status', response.statusCode);
+    //     console.log('body status', body.status);
+    //     console.log('title', body.title);
 
-        var streams = String(body.url_encoded_fmt_stream_map).split(',');
-      	for(var i = 0; i < streams.length; i++){
-          console.log('loop', i);
-      		var stream = qs.parse(streams[i]);
+    //     var streams = String(body.url_encoded_fmt_stream_map).split(',');
+    //   	for(var i = 0; i < streams.length; i++){
+    //       console.log('loop', i);
+    //   		var stream = qs.parse(streams[i]);
 
-          console.log(stream.quality);
-    			console.log('stream url', stream.url);
+    //       console.log(stream.quality);
+    // 			console.log('stream url', stream.url);
 
-          console.log('this works');
-          if (i === 0) {
-            res.writeHead(200, {
-              'Content-Type': 'video/mp4'
-            })
-          }
-          request(stream.url + '&signature=' + (stream.sig || stream.s)).pipe(res);
-        }
+    //       console.log('this works');
+    //       if (i === 0) {
+    //         res.writeHead(200, {
+    //           'Content-Type': 'video/mp4'
+    //         })
+    //       }
+    //       request(stream.url + '&signature=' + (stream.sig || stream.s)).pipe(res);
+    //     }
 
 
-    });
-
-    // res.writeHead(200, {
-    //   'Content-Type': 'video/mp4'
     // });
-    // req.pipe(r);
-    // r.pipe(res);
+
+    res.writeHead(200, {
+      'Content-Type': 'video/mp4'
+    });
+    req.pipe(r);
+    r.pipe(res);
   } catch (err) {
     console.log(err);
   }

@@ -14,12 +14,12 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatInputModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatMenuModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { StreamComponent } from './stream/stream.component';
-import { MenusComponent } from './menus/menus.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -34,7 +34,6 @@ import { PlaylistComponent } from './playlist/playlist.component';
   declarations: [
     AppComponent,
     StreamComponent,
-    MenusComponent,
     HeaderComponent,
     DialogComponent,
     AdminPanelComponent,
@@ -51,6 +50,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatCardModule,
+    MatMenuModule,
     MatButtonModule,
     MatTabsModule,
     MatDialogModule,

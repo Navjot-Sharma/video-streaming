@@ -3,29 +3,30 @@
     <div class="details">
       <p>
         <i class="fas fa-user-circle"></i>
-        John Doe
+        {{ user.name }}
       </p>
-      <p>navi@g.com</p>
+      <p>{{ user.email }}</p>
     </div>
     <section class="sections">
       <mat-list>
         <h3 matSubheader>Settings</h3>
-        <mat-list-item
-          *ngFor="let folder of [1]"
-          [routerLink]="['/settings/general']"
-          routerLinkActive="active"
-        >
+        <mat-list-item>
           <mat-icon matListIcon>settings</mat-icon>
           <h4 matLine>General</h4>
         </mat-list-item>
         <mat-divider></mat-divider>
-        <h3 matSubheader>Playlists</h3>
-        <mat-list-item *ngFor="let note of [1, 2, 3]; let id = index"
-        [routerLink]="['/settings/editPlaylist', id]"
-        routerLinkActive="active">
-          <mat-icon matListIcon>queue_music</mat-icon>
-          <h4 matLine>playlist.name</h4>
-        </mat-list-item>
+        <ng-container *ngIf="playlists.length > 0">
+          <h3 matSubheader>Playlists</h3>
+          <mat-list-item
+            *ngFor="let playlist of playlists; let id = index"
+            [routerLink]="['/settings/editPlaylist', id]"
+            routerLinkActive="active"
+          >
+            <mat-icon matListIcon>queue_music</mat-icon>
+            <h4 matLine>{{ playlist.name }}</h4>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
         <h3 matSubheader>Options</h3>
         <mat-list-item (click)="onCreatePlaylist()">
           <mat-icon matListIcon>playlist_add</mat-icon>

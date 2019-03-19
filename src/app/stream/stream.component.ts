@@ -1,3 +1,4 @@
+import { PlaylistService } from './../shared/playlist.service';
 import { environment } from './../../environments/environment';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -14,7 +15,8 @@ export class StreamComponent implements OnInit {
   login = false;
   showLoginSub: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private playlistService: PlaylistService) {}
 
   onCloseLogin() {
     this.authService.getLoginSub().next({ status: false });
@@ -24,5 +26,8 @@ export class StreamComponent implements OnInit {
     this.showLoginSub = this.authService.getLoginSub().subscribe(response => {
       this.login = response.status;
     });
+    if (this.authService.IsAuthenticated) {
+      this.playlistService.fetchPlaylists();
+    }
   }
 }

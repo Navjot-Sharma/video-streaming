@@ -9,24 +9,27 @@ const normaltest = require('./normaltest');
 
 router.get('', (req, res) => {
   var data = url.parse(req.url,true).query;
-  data.type = data.type || 'video/mp4';
+  // data.type = data.type || 'video/mp4';
 
-  request('http://www.youtube.com/get_video_info?video_id=LPhqL4DqzBg',(err, response, body) => {
+  request('http://www.youtube.com/get_video_info?video_id=TcMBFSGVi1c',(err, response, body) => {
 		if(!err && response.statusCode === 200){
 
 			body = qs.parse(body);
       console.log('Requesting video "%s"',body.title);
 
-      normal(data, body)(res);
+      // normal(data, body)(res);
 
-      // var streams = String(body.url_encoded_fmt_stream_map).split(',');
-
+			var streams = String(body.url_encoded_fmt_stream_map).split(',');
+			
 	    // for(var i = 0; i < streams.length; i++){
-		  //   var stream = qs.parse(streams[i]);
-		  //   if(String(stream.type).indexOf(data.type) > -1){
-			// 	  request(stream.url).pipe(res);
+				// 	console.log('same function entered');
+		    var stream = qs.parse(streams[0]);
+				console.log(stream);
+		  //   // if(String(stream.type).indexOf(data.type) > -1){
+			// 		console.log('timess', i)
+				  request(stream.url).pipe(res);
       //     // normaltest(stream)(res);
-		  //   }
+		  //   // }
 	    // }
 
 

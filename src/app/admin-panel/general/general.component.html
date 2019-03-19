@@ -3,32 +3,32 @@
     <mat-card-title>Personal Information</mat-card-title>
     <div class="grid1">
       <p>Name :</p>
-      <p>John Doe</p>
+      <p>{{ user.name }}</p>
       <p>E-mail :</p>
-      <p>nav@g.com</p>
+      <p>{{ user.email }}</p>
       <p>Password :</p>
       <p>***********</p>
-      <button mat-button (click)="showUpdateInfo = !showUpdateInfo">Change</button>
+      <button mat-button (click)="showUpdateTab = !showUpdateTab">
+        Change
+      </button>
     </div>
   </mat-card>
-  <mat-card *ngIf="showUpdateInfo">
+  <mat-card *ngIf="showUpdateTab">
     <mat-card-title>Update Information</mat-card-title>
-    <div class="grid2">
-      <!-- <form> -->
+    <form class="grid2" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
       <p>Name :</p>
       <mat-form-field>
-        <input matInput value="Sushi" />
+        <input type="text" matInput formControlName="name" />
       </mat-form-field>
       <p>E-mail :</p>
       <mat-form-field>
-        <input matInput value="Sushi" />
+        <input type="email" matInput formControlName="email" />
       </mat-form-field>
       <p>Confirm Password :</p>
       <mat-form-field>
-        <input matInput value="Sushi" />
+        <input type="password" matInput formControlName="password" />
       </mat-form-field>
-      <button mat-button>Update</button>
-      <!-- </form> -->
-    </div>
+      <button mat-button type="submit">Update</button>
+    </form>
   </mat-card>
 </section>

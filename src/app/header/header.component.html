@@ -1,16 +1,29 @@
 <nav class="navbar navbar-light bg-light justify-content-between">
-    <a class="navbar-brand" [routerLink]="[ '/' ]">Video Streaming App</a>
-    <div *ngIf="!isAuthenticated">
-        <button class="btn btn-outline-success my-1 mr-sm-2"
-         (click)="onLoginShow()">Login</button>
-        <button class="btn btn-outline-success my-1 my-sm-0"
-         (click)="onSignupShow()">Signup</button>
-    </div>
-    <div *ngIf="isAuthenticated">
-        <button class="btn btn-outline-success my-1 mr-sm-2"
-         [routerLink]="['/settings']">Settings</button>
-        <button class="btn btn-outline-success my-1 my-sm-0"
-         (click)="onLogout()">Logout</button>
-    </div>
-
+  <a class="navbar-brand" [routerLink]="['/']">Video Streaming App</a>
+  <div *ngIf="!isAuthenticated">
+    <button
+      mat-button
+      class="btn btn-outline-default my-1 mr-sm-2"
+      (click)="onLoginShow()"
+    >
+      Login
+    </button>
+    <button
+      mat-button
+      class="btn btn-outline-default my-1 my-sm-0"
+      (click)="onSignupShow()"
+    >
+      Signup
+    </button>
+  </div>
+  <div *ngIf="isAuthenticated" class="options">
+    <i class="fas fa-caret-down" [matMenuTriggerFor]="menu"></i>
+    <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
+    <mat-menu #menu="matMenu">
+      <!-- <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button> -->
+      <button mat-menu-item [routerLink]="['/settings']">Settings</button>
+          <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </div>
 </nav>
