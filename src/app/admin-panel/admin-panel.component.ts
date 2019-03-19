@@ -13,6 +13,8 @@ import { Playlist } from '../shared/playlist.model';
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit, OnDestroy {
+
+  isLoading = true;
   user: User;
   playlists: Playlist[];
   playlistsSub: Subscription;
@@ -30,7 +32,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(response => {
       console.log(response);
-      if (response === '') {
+      if (response === '' || response === undefined) {
         return this.snackBar.open('Playlist not created', 'Ok', {
           duration: 2000
         });
@@ -40,11 +42,13 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.user = this.authService.User;
+    this.authService.getUserSub().subscribe( response => this.user = response);
     this.playlistService.fetchPlaylists();
     this.playlists = this.playlistService.Playlists;
     this.playlistsSub = this.playlistService.getPlaylistsSub()
      .subscribe( response => {
        this.playlists = response;
+       this.isLoading = false;
        console.log('admin', this.playlists);
       });
   }

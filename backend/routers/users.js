@@ -69,14 +69,16 @@ router.post('/signup', async (req, res) => {
     });
 
     res.status(200).json({user, token});
-  } catch(err) {
-    console.log(err);
-    res.status(400).json({err: err.message});
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({error: error.message});
   }
 });
 
 router.put('/:id', async (req, res) => {
   try {
+    if (!req.body.password) throw new Error('Please enter a password');
+
     let user = await User.findById(req.params.id);
     if (!user) throw new Error(`User id or password didn't match`);
 
@@ -90,7 +92,7 @@ router.put('/:id', async (req, res) => {
     console.log('updates', updates);
 
     result = await User.findByIdAndUpdate(req.params.id, {$set: updates}, {new: true});
-    
+
     user = {
       _id: result._id,
       name: result.name,
@@ -101,9 +103,9 @@ router.put('/:id', async (req, res) => {
     console.log('user', user);
     const token = jwt.sign(user, prod.jwt, {expiresIn: '72h'});
     res.status(200).json({user, token});
-  } catch(err) {
-    console.log(err);
-    res.status(400).json({err: err.message});
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({error: error.message});
   }
 });
 

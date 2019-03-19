@@ -17,13 +17,12 @@
     </button>
   </div>
   <div *ngIf="isAuthenticated" class="options">
-    <i class="fas fa-caret-down" [matMenuTriggerFor]="menu"></i>
-    <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <i class="fas fa-caret-down"></i>
+    </button>
     <mat-menu #menu="matMenu">
-      <!-- <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button> -->
       <button mat-menu-item [routerLink]="['/settings']">Settings</button>
-          <button mat-menu-item (click)="onLogout()">Logout</button>
+      <button mat-menu-item (click)="onLogout()">Logout</button>
     </mat-menu>
   </div>
 </nav>

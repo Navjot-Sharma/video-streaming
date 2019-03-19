@@ -8,6 +8,7 @@ const streamsRouter = require('./routers/streams');
 const youStreamsRouter = require('./routers/youStream');
 const usersRouter = require('./routers/users');
 const playlistsRouter = require('./routers/playlists');
+const videosRouter = require('./routers/videos');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -28,6 +29,7 @@ app.use('/youStream', youStreamsRouter);
 app.use('/api/git', gitStreamRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/playlists', playlistsRouter);
+app.use('/api/videos', videosRouter);
 
 mongoose.connect(prod.mongodb, {
   useFindAndModify: false,

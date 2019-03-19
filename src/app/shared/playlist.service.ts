@@ -9,15 +9,15 @@ import { Playlist } from './playlist.model';
 
 @Injectable({ providedIn: 'root' })
 export class PlaylistService {
-
-  private playlists: Playlist[];
+  private playlists: Playlist[] = [];
   private playlistsSub = new Subject<Playlist[]>();
 
-  constructor(private dialog: MatDialog,
-              private snackBar: MatSnackBar,
-              private http: HttpClient,
-              private authService: AuthService) {}
-
+  constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   get Playlists() {
     return this.playlists;
@@ -27,13 +27,16 @@ export class PlaylistService {
   }
 
   fetchPlaylists() {
-    this.http.get<{playlists: Playlist[]}>(
-      env.url + 'playlists/' + this.authService.User._id)
-     .subscribe( response => {
-       console.log('fetch service', response);
-        this.playlists = response.playlists;
+    this.http
+      .get<{ playlists: Playlist[] }>(
+        env.url + 'playlists/' + this.authService.User._id)
+      .subscribe(response => {
+        console.log('fetch service', response);
+        if (response) {
+          this.playlists = response.playlists;
+        }
         this.playlistsSub.next(this.playlists);
-     });
+      });
   }
 
   createPlaylist(name: string) {
@@ -41,11 +44,28 @@ export class PlaylistService {
       name,
       userId: this.authService.User._id
     };
-    this.http.post<{playlists: Playlist[]}>(env.url + 'playlists', postData)
-     .subscribe( response => {
-       console.log('create', response);
-      this.playlists = response.playlists;
-      this.playlistsSub.next(this.playlists);
-     }, err => {});
+    this.http
+      .post<{ playlists: Playlist[] }>(env.url + 'playlists', postData)
+      .subscribe(
+        response => {
+          console.log('create', response);
+          this.playlists = response.playlists;
+          this.playlistsSub.next(this.playlists);
+        },
+        err => {}
+      );
+  }
+
+  addVideo(videoId: string, playlistId: string) {
+    this.http
+      .post<{ playlists: Playlist[] }>(env.url + 'videos', {
+        videoId,
+        playlistId
+      })
+      .subscribe(response => {
+        console.log(response);
+        this.playlists = response.playlists;
+        this.playlistsSub.next(this.playlists);
+      });
   }
 }

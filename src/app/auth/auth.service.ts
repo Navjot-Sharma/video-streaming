@@ -79,7 +79,7 @@ export class AuthService {
       this.snackbar.open('Your account has been updated', 'Ok', {duration: 2000});
    }, (error) => {
      console.log(error.error);
-      this.showLoginSub.next({status: true, message: error.error});
+     this.dialog.open(DialogComponent, {data: {result: 'Failed', message: error.error.error}});
    });
   }
 

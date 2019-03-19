@@ -25,14 +25,18 @@ router.get('/:id',async (req, res) => {
 
 router.post('', async (req, res) => {
   try {
+    if (!req.body.userId || !req.body.name) {
+      throw new Error('Please provide a valid id or name');
+    }
+
     const userId = mongoose.Types.ObjectId(req.body.userId);
-    const {playlists} = await Playlists.findOne({userId});
-    // const response = await Playlists.findOne({userId});
-    console.log(playlists);
+    const isFound = await Playlists.findOne({userId});
+
     const playlist = new Playlist({name: req.body.name});
+
     let result;
 
-    if (playlists) {
+    if (isFound) {
       result = await Playlists.findOneAndUpdate({userId}, {$push: {playlists: playlist}}, {new: true});
       console.log('if', result);
     } else {
@@ -43,7 +47,7 @@ router.post('', async (req, res) => {
       result = await playlists.save();
       console.log('else', result);
     }
-    
+
     res.status(200).json({playlists: result.playlists});
   } catch(err) {
     console.log(err);

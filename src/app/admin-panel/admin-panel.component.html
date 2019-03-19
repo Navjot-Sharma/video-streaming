@@ -1,16 +1,20 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
-    <div class="details">
+    <div class="details" *ngIf="!isLoading">
       <p>
         <i class="fas fa-user-circle"></i>
         {{ user.name }}
       </p>
       <p>{{ user.email }}</p>
     </div>
-    <section class="sections">
+    <section class="sections" *ngIf="!isLoading">
       <mat-list>
         <h3 matSubheader>Settings</h3>
-        <mat-list-item>
+        <mat-list-item
+        [routerLink]="['/settings/general']"
+        routerLinkActive="active">
           <mat-icon matListIcon>settings</mat-icon>
           <h4 matLine>General</h4>
         </mat-list-item>
@@ -19,7 +23,7 @@
           <h3 matSubheader>Playlists</h3>
           <mat-list-item
             *ngFor="let playlist of playlists; let id = index"
-            [routerLink]="['/settings/editPlaylist', id]"
+            [routerLink]="['/settings/editPlaylist', playlist._id]"
             routerLinkActive="active"
           >
             <mat-icon matListIcon>queue_music</mat-icon>

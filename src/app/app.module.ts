@@ -15,7 +15,10 @@ import {
   MatIconModule,
   MatInputModule,
   MatTooltipModule,
-  MatMenuModule
+  MatMenuModule,
+  MatProgressBarModule,
+  MatToolbarModule,
+  MatDividerModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -54,13 +57,16 @@ import { PlaylistComponent } from './playlist/playlist.component';
     MatButtonModule,
     MatTabsModule,
     MatDialogModule,
+    MatDividerModule,
     MatSnackBarModule,
     MatSidenavModule,
     MatExpansionModule,
     MatListModule,
     MatIconModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -11,7 +11,7 @@ const routes: Route[] = [
   {path: 'settings', redirectTo: 'settings/general'},
   {path: 'settings', component: AdminPanelComponent, children: [
     {path: 'general', component: GeneralComponent},
-    {path: 'editPlaylist/:id', component: EditPlaylistComponent},
+    {path: 'editPlaylist/:id', component: EditPlaylistComponent}
   ]},
   {path: '**', redirectTo: ''}
 ];
