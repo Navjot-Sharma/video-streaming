@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +17,8 @@ export class PlaylistService {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   get Playlists() {
@@ -56,6 +58,15 @@ export class PlaylistService {
       );
   }
 
+  deletePlaylist(playlistId: string) {
+    this.http.delete<{playlists: Playlist[]}>(env.url + 'playlists/' + playlistId)
+     .subscribe(response => {
+      this.playlists = response.playlists;
+      this.playlistsSub.next(this.playlists);
+      this.router.navigate(['/settings/general']);
+     });
+  }
+
   addVideo(videoId: string, playlistId: string) {
     this.http
       .post<{ playlists: Playlist[] }>(env.url + 'videos', {
@@ -67,5 +78,14 @@ export class PlaylistService {
         this.playlists = response.playlists;
         this.playlistsSub.next(this.playlists);
       });
+  }
+
+  deleteVideo(playlistId: string, videoId: string) {
+    this.http.delete<{playlists: Playlist[]}>(env.url + `videos/${playlistId}/${videoId}`)
+     .subscribe(response => {
+       console.log('delete', response);
+      this.playlists = response.playlists;
+      this.playlistsSub.next(this.playlists);
+     });
   }
 }

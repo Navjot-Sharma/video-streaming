@@ -55,5 +55,19 @@ router.post('', async (req, res) => {
   }
 });
 
+router.delete('/:playlistId', async (req, res) => {
+  try {
+    const playlistId = mongoose.Types.ObjectId(req.params.playlistId);
+    const playlists = await Playlists.findOneAndUpdate({'playlists._id': playlistId},
+     {$pull: {'playlists': {'_id': playlistId}}}, {new: true});
+
+    if (!playlists) throw new Error('Please enter a valid id');
+
+    res.status(200).json(playlists);
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({error: error.message});
+  }
+});
 
 module.exports = router;

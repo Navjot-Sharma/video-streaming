@@ -31,6 +31,14 @@ export class EditPlaylistComponent implements OnInit {
     this.playlistService.addVideo(videoId, this.route.snapshot.params['id']);
   }
 
+  onRemoveVideo(videoId: string) {
+    this.playlistService.deleteVideo(this.activePlaylist._id, videoId);
+  }
+
+  onDeletePlaylist() {
+    this.playlistService.deletePlaylist(this.activePlaylist._id);
+  }
+
   ngOnInit() {
     this.playlistsSub = this.playlistService
       .getPlaylistsSub()
