@@ -4,14 +4,14 @@
     <button
       mat-button
       class="btn btn-outline-default my-1 mr-sm-2"
-      (click)="onLoginShow()"
+      (click)="onLoginShow(0)"
     >
       Login
-    </button>
+    </button>|
     <button
       mat-button
       class="btn btn-outline-default my-1 my-sm-0"
-      (click)="onSignupShow()"
+      (click)="onLoginShow(1)"
     >
       Signup
     </button>
@@ -21,7 +21,7 @@
       <i class="fas fa-caret-down"></i>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/settings']">Settings</button>
+      <button mat-menu-item [routerLink]="[menuItem.url]">{{menuItem.name}}</button>
       <button mat-menu-item (click)="onLogout()">Logout</button>
     </mat-menu>
   </div>

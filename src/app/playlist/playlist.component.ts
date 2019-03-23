@@ -1,22 +1,30 @@
-import { FormGroup, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Playlist } from './../shared/playlist.model';
+import { PlaylistService } from './../shared/playlist.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css']
 })
-export class PlaylistComponent  implements OnInit {
+export class PlaylistComponent  implements OnInit, OnDestroy {
 
-  searchForm: FormGroup;
+  playlistsSub: Subscription;
+  playlists: Playlist[];
 
-  list = ['one', 'two', 'three'];
+  constructor(private playlistService: PlaylistService) { }
 
-  constructor() { }
+  onPlayVideo(videoId: string, title: string, activePlaylist: Playlist) {
+    this.playlistService.getPlayVideoSub().next({videoId, title, activePlaylist});
+  }
 
   ngOnInit() {
-    this.searchForm = new FormGroup({
-      search: new FormControl(null)
-    });
+    this.playlists = this.playlistService.Playlists;
+    this.playlistsSub = this.playlistService.getPlaylistsSub()
+     .subscribe( response => this.playlists = response);
+  }
+  ngOnDestroy() {
+    this.playlistsSub.unsubscribe();
   }
 }

@@ -24,7 +24,7 @@ import {
 import { AppComponent } from './app.component';
 import { StreamComponent } from './stream/stream.component';
 import { HeaderComponent } from './header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DialogComponent } from './dialog/dialog.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -32,6 +32,7 @@ import { GeneralComponent } from './admin-panel/general/general.component';
 import { EditPlaylistComponent } from './admin-panel/edit-playlist/edit-playlist.component';
 import { AuthComponent } from './auth/auth.component';
 import { PlaylistComponent } from './playlist/playlist.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,9 @@ import { PlaylistComponent } from './playlist/playlist.component';
     MatProgressBarModule,
     MatToolbarModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent]
 })

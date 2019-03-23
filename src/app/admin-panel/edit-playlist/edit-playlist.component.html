@@ -1,23 +1,33 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
 <div class="float-sm-right">
-  <button mat-button>Rename Playlist</button> |
-  <button mat-button color="warn" (click)='onDeletePlaylist()'>Delete Playlist</button>
+  <button mat-button (click)="onRenamePlaylist()">Rename Playlist</button> |
+  <button mat-button color="warn" (click)="onDeletePlaylist()">
+    Delete Playlist
+  </button>
 </div>
 <mat-form-field>
-  <input matInput type="text" [(ngModel)]="newVideo"/>
+  <input matInput type="text" [(ngModel)]="newVideo" />
 </mat-form-field>
 <button mat-raised-button (click)="onAddVideo()">Add Video</button>
 
 <mat-list *ngIf="!isLoading">
   <mat-divider></mat-divider>
   <h3 mat-subheader>Videos</h3>
-  <mat-list-item *ngFor="let video of activePlaylist.videos; last as last">
-    <mat-icon mat-list-icon>video_library</mat-icon>
-    <h4 mat-line>{{video.title}}</h4>
-    <!-- <p mat-line class="demo-2">folder.updated</p> -->
-    <i class="fas fa-times" matTooltip="Remove video" (click)="onRemoveVideo(video.videoId)"></i>
-    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-  </mat-list-item>
+  <mat-list-item *ngIf="activePlaylist.videos.length === 0; else lists"
+    >Playlist empty</mat-list-item
+  >
+  <ng-template #lists>
+    <mat-list-item *ngFor="let video of activePlaylist.videos; last as last">
+      <mat-icon mat-list-icon>video_library</mat-icon>
+      <h4 mat-line>{{ video.title }}</h4>
+      <i
+        class="fas fa-times"
+        matTooltip="Remove video"
+        (click)="onRemoveVideo(video.videoId)"
+      ></i>
+      <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+    </mat-list-item>
+  </ng-template>
   <mat-divider></mat-divider>
 </mat-list>

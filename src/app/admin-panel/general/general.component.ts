@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from './../../shared/user.model';
 import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -18,9 +18,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   onSubmit() {
-    console.log(this.updateForm.value);
-    this.authService.updateAccount(this.updateForm.value);
-    this.showUpdateTab = false;
+    if (this.updateForm.valid) {
+      this.authService.updateAccount(this.updateForm.value);
+      this.showUpdateTab = false;
+    }
   }
 
   ngOnInit() {
@@ -28,9 +29,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.getUserSub().subscribe( response => this.user = response);
 
     this.updateForm = new FormGroup({
-      name: new FormControl(this.user.name),
-      email: new FormControl(this.user.email),
-      password: new FormControl()
+      name: new FormControl(this.user.name, { validators: Validators.required}),
+      email: new FormControl(this.user.email, { validators:
+        [Validators.email, Validators.required]}),
+      password: new FormControl(null, { validators: Validators.required})
     });
   }
   ngOnDestroy() {

@@ -13,10 +13,9 @@ import { Playlist } from '../shared/playlist.model';
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit, OnDestroy {
-
   isLoading = true;
   user: User;
-  playlists: Playlist[];
+  playlists: Playlist[] = [];
   playlistsSub: Subscription;
 
   constructor(
@@ -31,7 +30,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       data: { result: 'Create new playlist', message: '', input: true }
     });
     dialogRef.afterClosed().subscribe(response => {
-      console.log(response);
       if (response === '' || response === undefined) {
         return this.snackBar.open('Playlist not created', 'Ok', {
           duration: 2000
@@ -42,14 +40,20 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.user = this.authService.User;
-    this.authService.getUserSub().subscribe( response => this.user = response);
+
+    this.authService.getUserSub().subscribe(response => (this.user = response));
     this.playlistService.fetchPlaylists();
-    this.playlists = this.playlistService.Playlists;
-    this.playlistsSub = this.playlistService.getPlaylistsSub()
-     .subscribe( response => {
-       this.playlists = response;
-       this.isLoading = false;
-       console.log('admin', this.playlists);
+    if (!this.playlistService.IsAdminPlaylist) {
+      this.playlists = this.playlistService.Playlists;
+    }
+
+    this.playlistsSub = this.playlistService
+      .getPlaylistsSub()
+      .subscribe(response => {
+        if (!this.playlistService.IsAdminPlaylist) {
+          this.playlists = response;
+        }
+        this.isLoading = false;
       });
   }
   ngOnDestroy() {

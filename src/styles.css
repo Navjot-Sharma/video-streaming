@@ -7,7 +7,7 @@ body {
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
 * {outline: none !important;}
-a {cursor: pointer;}
+a, i {cursor: pointer;}
 
 .mat-expansion-panel-body {
   padding: 0.5rem !important;

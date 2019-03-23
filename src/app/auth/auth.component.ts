@@ -1,8 +1,8 @@
 import { fadeIn } from './../shared/fade-in.animation';
 import { AuthService } from './auth.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from './../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,10 +11,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./auth.component.css'],
   animations: [fadeIn]
 })
-export class AuthComponent  implements OnInit {
-
+export class AuthComponent implements OnInit, OnDestroy {
+  isLoading = false;
   url = environment.url + 'git';
-  tabIndex = 0;
+  tabIndex: number;
   login = false;
   message: string;
   showLoginSub: Subscription;
@@ -28,36 +28,48 @@ export class AuthComponent  implements OnInit {
   }
 
   onSignup() {
-    console.log('entered');
-    if (this.signupForm.valid && this.signupForm.value.password === this.signupForm.value.confirmPassword) {
+    if (
+      this.signupForm.valid &&
+      this.signupForm.value.password === this.signupForm.value.confirmPassword
+    ) {
       delete this.signupForm.value.confirmPassword;
-      console.log('deleted');
       this.authService.createAccount(this.signupForm.value);
-      console.log('sent');
     }
   }
 
   onLogin() {
-    if (this.signupForm.valid) {
+    if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value);
     }
   }
 
   ngOnInit() {
+    this.tabIndex = this.authService.tabIndex;
+
     this.showLoginSub = this.authService.getLoginSub().subscribe(response => {
       this.login = response.status;
-      this.tabIndex = response.index;
       this.message = response.message;
     });
+
     this.signupForm = new FormGroup({
-      name: new FormControl(null),
-      email: new FormControl(null),
-      password: new FormControl(null),
-      confirmPassword: new FormControl(null)
+      name: new FormControl(null, { validators: Validators.required }),
+      email: new FormControl(null, {
+        validators: [Validators.required, Validators.email]
+      }),
+      password: new FormControl(null, { validators: Validators.required }),
+      confirmPassword: new FormControl(null, {
+        validators: Validators.required
+      })
     });
+
     this.loginForm = new FormGroup({
-      email: new FormControl(null),
-      password: new FormControl(null)
+      email: new FormControl(null, {
+        validators: [Validators.required, Validators.email]
+      }),
+      password: new FormControl(null, { validators: Validators.required })
     });
+  }
+  ngOnDestroy() {
+    this.showLoginSub.unsubscribe();
   }
 }

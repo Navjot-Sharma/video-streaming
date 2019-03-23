@@ -1,49 +1,53 @@
 <section class="login" [@fadeIn]>
-  <mat-card>
+  <mat-card class="mat-elevation-z24">
     <i
       class="fa fa-times float-right"
       aria-hidden="true"
       (click)="onCloseLogin()"
     ></i>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
     <mat-tab-group
+      *ngIf="!isLoading"
       dynamicHeight="true"
       mat-align-tabs="center"
       [selectedIndex]="tabIndex"
     >
       <mat-tab label="Login">
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          <label>E-mail:</label>
-          <input type="email" class="form-control" formControlName="email" />
-          <label>Password:</label>
-          <input
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
-          <button class="btn btn-outline-success" type="submit">Login</button>
-          <a class="float-right" [routerLink]="['']">Forgot password?</a>
-          <span class="float-right" *ngIf="message">*{{ message }}</span>
+          <mat-form-field>
+            <mat-label>E-mail:</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password:</mat-label>
+            <input type="password" matInput formControlName="password" />
+          </mat-form-field>
+          <div>
+            <button mat-button type="submit">Login</button>
+            <a class="float-right" [routerLink]="['']">Forgot password?</a>
+            <span class="float-right" *ngIf="message">*{{ message }}</span>
+          </div>
         </form>
       </mat-tab>
       <mat-tab label="Signup">
         <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-          <label>Name:</label>
-          <input type="text" class="form-control" formControlName="name" />
-          <label>E-mail:</label>
-          <input type="email" class="form-control" formControlName="email" />
-          <label>Password:</label>
-          <input
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
-          <label>Confirm password:</label>
-          <input
-            type="password"
-            class="form-control"
-            formControlName="confirmPassword"
-          />
-          <button class="btn btn-outline-success" type="submit">
+          <mat-form-field>
+            <mat-label>Name:</mat-label>
+            <input matInput type="text" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>E-mail:</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password:</mat-label>
+            <input matInput type="password" formControlName="password" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Confirm password:</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" />
+          </mat-form-field>
+          <button mat-button type="submit">
             Create Account
           </button>
         </form>

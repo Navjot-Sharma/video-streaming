@@ -14,14 +14,16 @@ export class AuthService {
   private user: User;
   private isAuthenticated = false;
   private token: string;
-  private showLoginSub = new Subject<{status: boolean, index?: number, message?: string}>();
+  private showLoginSub = new Subject<{status: boolean, message?: string}>();
   private authStatusListener = new Subject<boolean>();
   private userSub = new Subject<User>();
+
+  public tabIndex: number;
 
   constructor(private http: HttpClient,
               private router: Router,
               private dialog: MatDialog,
-              private snackbar: MatSnackBar) {}
+              private snackBar: MatSnackBar) {}
 
 
   get User() {
@@ -31,6 +33,9 @@ export class AuthService {
     return this.userSub.asObservable();
   }
 
+  getToken() {
+    return this.token;
+  }
   getLoginSub() {
     return this.showLoginSub;
   }
@@ -55,7 +60,6 @@ export class AuthService {
   }
 
   login(body) {
-    console.log(body);
     this.http.post<{user: User, token: string}>(env.url + 'users/login', body)
      .subscribe( response => {
         this.user = response.user;
@@ -63,23 +67,21 @@ export class AuthService {
         this.saveAuthData(response.token);
         this.showLoginSub.next({status: false});
         this.authStatusListener.next(true);
-        this.snackbar.open('You have been logged in', 'Ok', {duration: 2000});
+        this.showSnackBar('You have been logged in', 'Ok');
      }, (error) => {
-       console.log(error.error);
         this.showLoginSub.next({status: true, message: error.error});
      });
   }
 
   updateAccount(body) {
-    this.http.put<{user: User, token: string}>(env.url + 'users/' + this.user._id, body)
+    this.http.put<{user: User, token: string}>(env.url + 'users', body)
      .subscribe( response => {
       this.user = response.user;
       this.saveAuthData(response.token);
       this.userSub.next(this.user);
-      this.snackbar.open('Your account has been updated', 'Ok', {duration: 2000});
+      this.showSnackBar('Your account has been updated', 'Ok');
    }, (error) => {
-     console.log(error.error);
-     this.dialog.open(DialogComponent, {data: {result: 'Failed', message: error.error.error}});
+     this.dialog.open(DialogComponent, {data: {result: 'Failed', message: 'Update failed'}});
    });
   }
 
@@ -91,7 +93,7 @@ export class AuthService {
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         this.router.navigate(['/']);
-        this.snackbar.open('You have been logged out', 'Ok', {duration: 2000});
+        this.showSnackBar('You have been logged out', 'Ok');
       }
     });
   }
@@ -118,12 +120,14 @@ export class AuthService {
     this.token = localStorage.getItem('vsa_token');
 
     if (Object.values(authObj).indexOf(undefined && null) !== -1 || !this.token) {
+      this.clearAuthData();
+      this.isAuthenticated = false;
+      this.authStatusListener.next(false);
       return this.router.navigate(['/']);
     }
     this.user = authObj;
     this.isAuthenticated = true;
     this.authStatusListener.next(true);
-    console.log('auto auth worked', this.user);
   }
 
   clearAuthData() {
@@ -132,5 +136,9 @@ export class AuthService {
     localStorage.removeItem('vsa_username');
     localStorage.removeItem('vsa_email');
     localStorage.removeItem('vsa_authId');
+  }
+
+  showSnackBar(message: string, action: string, timing?: number) {
+    this.snackBar.open(message, action, {duration: timing || 2000});
   }
 }

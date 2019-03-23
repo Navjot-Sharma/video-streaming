@@ -5,16 +5,13 @@ h2, h3 {
 
 .stream {
   display: flex;
-  width: 100%;
-  height: auto;
+  width: 100vw;
+  height: 80vh;
 }
 video {
-  max-width: 80%;
-  height: auto;
-}
-section {
-  max-height: 80%;
+  width: 350%;
 }
 app-playlist {
   width: 100%;
+  overflow: hidden;
 }

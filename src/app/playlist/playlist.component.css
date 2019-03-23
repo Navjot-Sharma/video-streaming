@@ -1,17 +1,20 @@
 section {
   max-height: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   overflow: auto;
+}
+mat-list-item {
+  cursor: pointer;
 }
 ::-webkit-scrollbar {
   width: 0.5rem;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-} 
+  background: #f1f1f1;
+}
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }

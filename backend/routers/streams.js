@@ -1,49 +1,27 @@
-const router = require('express')();
-const fs = require('fs');
-const request = require('request');
+const qs = require("querystring");
+const request = require("request");
+const router = require("express")();
 
-router.get('', async (req, res) => {
+router.get("/:videoId", (req, res) => {
   try {
-    // const path = request('');
-    const path = './backend/assets/3. 3- Setting Up the Development.mp4';
-    const stats = fs.statSync(path);
-    const fileSize = stats.size;
-    console.log(fileSize);
-    const range = req.headers.range
-    console.log(range);
-    if (range) {
-      const parts = range.replace(/bytes=/, "").split("-");
+    request(
+      "http://www.youtube.com/get_video_info?video_id=" + req.params.videoId,
+      (err, response, body) => {
+        if (err || response.statusCode !== 200) {
+          throw new Error("Server error");
+        }
+        body = qs.parse(body);
 
-      const start = parseInt(parts[0], 10);
-      const end = parts[1]
-        ? parseInt(parts[1], 10)
-        : fileSize-1;
+        const streams = String(body.url_encoded_fmt_stream_map).split(",");
 
-      const chunksize = (end-start)+1;
-      const file = fs.createReadStream(path, {start, end});
-
-      const head = {
-        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': chunksize,
-        'Content-Type': 'video/mp4',
+        const stream = qs.parse(streams[0]);
+        request(stream.url).pipe(res);
       }
-
-      res.writeHead(206, head);
-      file.pipe(res);
-    } else {
-      const head = {
-        'Content-Length': fileSize,
-        'Content-Type': 'video/mp4',
-      }
-      res.writeHead(200, head);
-      fs.createReadStream(path).pipe(res);
-    }
-  } catch(err) {
+    );
+  } catch (error) {
     console.log(err);
-    res.status(400).json(err.message);
+    res.status(400).json({ error: error.message });
   }
 });
-
 
 module.exports = router;

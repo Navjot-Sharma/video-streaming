@@ -1,3 +1,4 @@
+import { PlaylistService } from './shared/playlist.service';
 import { AuthService } from './auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -12,7 +13,8 @@ export class AppComponent implements OnInit {
   showLoginSub: Subscription;
   title = 'video-streaming';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private playlistService: PlaylistService) {}
 
   onOverlayClick() {
     this.authService.getLoginSub().next({status: false});
@@ -22,5 +24,8 @@ export class AppComponent implements OnInit {
     this.authService.autoAuth();
     this.showLoginSub = this.authService.getLoginSub()
      .subscribe( response => this.overlay = response.status);
+     if (this.authService.IsAuthenticated) {
+       this.playlistService.fetchPlaylists();
+     }
   }
 }

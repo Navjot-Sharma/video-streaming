@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const prod = require('./prod/prod');
-const gitStreamRouter = require('./routers/gitStream');
 const streamsRouter = require('./routers/streams');
-const youStreamsRouter = require('./routers/youStream');
 const usersRouter = require('./routers/users');
 const playlistsRouter = require('./routers/playlists');
 const videosRouter = require('./routers/videos');
@@ -24,9 +22,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use('', streamsRouter);
-app.use('/youStream', youStreamsRouter);
-app.use('/api/git', gitStreamRouter);
+app.use('/api/streams', streamsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/playlists', playlistsRouter);
 app.use('/api/videos', videosRouter);
