@@ -17,6 +17,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   tabIndex: number;
   login = false;
   message: string;
+  signupMessage: {show: false, message: ''};
   showLoginSub: Subscription;
   loginForm: FormGroup;
   signupForm: FormGroup;
@@ -28,10 +29,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSignup() {
-    if (
-      this.signupForm.valid &&
-      this.signupForm.value.password === this.signupForm.value.confirmPassword
-    ) {
+    if (this.signupform.value.password !== this.signupForm.value.confirmPassword) {
+      this.signupMessage.message = `Password and confirm password didn't match`;
+      return this.signupMessage.show = true;
+    }
+    if (this.signupForm.valid) {
       delete this.signupForm.value.confirmPassword;
       this.authService.createAccount(this.signupForm.value);
     }
