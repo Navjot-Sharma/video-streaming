@@ -7,7 +7,12 @@
         <source [src]="url" type="video/mp4" />
       </video>
     </div>
-    <h3>{{ title }}</h3>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon>video_library</mat-icon>
+        <p>{{ title }}</p>
+      </mat-list-item>
+    </mat-list>
   </div>
   <div class="col-md-4">
     <app-playlist></app-playlist>

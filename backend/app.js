@@ -1,6 +1,9 @@
-const app = require('express')();
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express();
 
 const prod = require('./prod/prod');
 const streamsRouter = require('./routers/streams');
@@ -26,6 +29,8 @@ app.use('/api/streams', streamsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/playlists', playlistsRouter);
 app.use('/api/videos', videosRouter);
+app.use('/', express.static(path.join(__dirname, 'angular')));
+
 
 mongoose.connect(prod.mongodb, {
   useFindAndModify: false,

@@ -17,7 +17,7 @@ mat-form-field {
   }
 }
 @media (max-width: 767.98px) {
-  * {
+  .app-center {
     text-align: center;
   }
   .add-video {

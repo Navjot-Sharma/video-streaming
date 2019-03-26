@@ -69,20 +69,21 @@ mat-drawer-content {
   transform: rotate(45deg) translate(-8px, -8px);
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #888;
-}
-
-@media (min-width: 767.98px) {
+@media (min-width: 768px) {
  .menu {
    display: none;
  }
- .overlay {
-   display: none;
- }
+}
+@media (max-width: 767.98px) {
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #888;
+  }
+  .router-hide {
+    display: none;
+  }
 }

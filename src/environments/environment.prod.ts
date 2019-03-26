@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: ''
+  url: 'https://video-streaming-mean.herokuapp.com/api/'
 };

@@ -1,15 +1,15 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-<div class="float-sm-right">
+<div class="float-sm-right app-center">
   <button mat-button (click)="onRenamePlaylist()">Rename Playlist</button> |
   <button mat-button color="warn" (click)="onDeletePlaylist()">
     Delete Playlist
   </button>
 </div>
-<mat-form-field class="add-video">
+<mat-form-field class="add-video app-center">
   <input matInput type="text" [(ngModel)]="newVideo" />
 </mat-form-field>
-<div class="add-button">
+<div class="add-button app-center">
   <button mat-raised-button (click)="onAddVideo()">Add Video</button>
 </div>
 
