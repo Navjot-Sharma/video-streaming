@@ -4,6 +4,8 @@ const router = require("express")();
 
 router.get("/:videoId", (req, res) => {
   try {
+    if (!req.params.videoId) throw new Error('Please provide a valid id');
+
     request(
       "http://www.youtube.com/get_video_info?video_id=" + req.params.videoId,
       (err, response, body) => {

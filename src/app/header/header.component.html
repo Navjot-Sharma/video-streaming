@@ -1,24 +1,20 @@
-<nav class="navbar navbar-light bg-light justify-content-between">
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between"
+ [class.app-center]="!isAuthenticated">
   <a class="navbar-brand" [routerLink]="['/']">Video Streaming App</a>
   <div *ngIf="!isAuthenticated">
     <button
       mat-button
       class="btn btn-outline-default my-1 mr-sm-2"
       (click)="onLoginShow(0)"
-    >
-      Login
-    </button>|
-    <button
+    >Login</button>| <button
       mat-button
       class="btn btn-outline-default my-1 my-sm-0"
       (click)="onLoginShow(1)"
-    >
-      Signup
-    </button>
+    >Signup</button>
   </div>
   <div *ngIf="isAuthenticated" class="options">
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <i class="fas fa-caret-down"></i>
+    <i  class="far fa-caret-square-down fa-2x"></i>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="[menuItem.url]">{{menuItem.name}}</button>

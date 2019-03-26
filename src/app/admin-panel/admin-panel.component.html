@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" opened>
     <div class="details" *ngIf="!isLoading">
       <p>
         <i class="fas fa-user-circle"></i>
@@ -45,9 +45,13 @@
         </mat-list-item>
       </mat-list>
     </section>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <!-- <h2>Welcome Admin!</h2> -->
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-drawer>
+  <mat-drawer-content [class.overlay]="showPanel">
+    <div class="menu" [class.change]="showPanel" (click)="drawer.toggle(); showPanel = !showPanel">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+    <router-outlet *ngIf="!showPanel"></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

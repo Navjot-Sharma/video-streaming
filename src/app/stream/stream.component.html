@@ -1,11 +1,17 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
-<section class="stream">
-  <video controls autoplay name="media" #video (ended)="onVideoEnd()">
-    <source [src]="url" type="video/mp4" />
-  </video>
-  <app-playlist></app-playlist>
+
+<section class="container-fluid">
+  <div class="col-md-8">
+    <div class="embed-responsive embed-responsive-16by9">
+      <video class="embed-responsive-item" controls autoplay name="media" #video (ended)="onVideoEnd()">
+        <source [src]="url" type="video/mp4" />
+      </video>
+    </div>
+    <h3>{{ title }}</h3>
+  </div>
+  <div class="col-md-4">
+    <app-playlist></app-playlist>
+  </div>
 </section>
-<!-- <h2>Now playing:</h2> -->
-<h3>{{ title }}</h3>
 
 <app-auth *ngIf="login"></app-auth>

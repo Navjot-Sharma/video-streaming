@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   margin: auto;
-  width: 25%;
+  width: 30%;
   height: 60%;
   z-index: 1000;
 }
@@ -32,4 +32,14 @@ form {
 }
 mat-form-field {
   margin: 0.7rem;
+}
+mat-spinner {
+  margin-left: 1rem;
+}
+
+
+@media (max-width: 767.98px) {
+  .login {
+    width: 90%;
+  }
 }

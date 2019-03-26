@@ -68,8 +68,14 @@ router.post("/signup", async (req, res) => {
 
     res.status(200).json({ user, token });
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ error: error.message });
+    // console.log(error);
+    let message = error.message;
+    if (error.errors && error.errors.email) {
+      console.log('reached');
+      console.dir(error.errors.email);
+      message = 'Email already registered';
+    }
+    res.status(400).json({ error: message });
   }
 });
 

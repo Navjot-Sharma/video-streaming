@@ -56,7 +56,10 @@ export class AuthService {
        this.saveAuthData(response.token);
        this.showLoginSub.next({status: false});
        this.authStatusListener.next(true);
-     }, error => this.showLoginSub.next({status: true, message: error.error}));
+     }, error => {
+       console.log(error.error.error);
+       this.showLoginSub.next({status: true, message: error.error.error});
+      });
   }
 
   login(body) {

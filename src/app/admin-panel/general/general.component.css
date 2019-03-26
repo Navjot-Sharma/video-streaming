@@ -20,3 +20,16 @@ button {
   width: 30%;
   margin: auto;
 }
+
+@media (max-width: 1000px) {
+  .grid1, .grid2 {
+    grid-template-columns: 30% 70%;
+  }
+  section {
+    display: block;
+  }
+  mat-card {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+}

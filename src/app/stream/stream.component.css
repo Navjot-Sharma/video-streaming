@@ -2,16 +2,18 @@ h2, h3 {
   display: inline-block;
   margin: 1rem 1rem;
 }
-
-.stream {
+section {
   display: flex;
-  width: 100vw;
-  height: 80vh;
-}
-video {
-  width: 350%;
 }
 app-playlist {
-  width: 100%;
   overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  section {
+    display: block;
+  }
+  app-playlist {
+    width: 100% !important;
+  }
 }

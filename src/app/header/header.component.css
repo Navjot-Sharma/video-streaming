@@ -1,0 +1,9 @@
+@media (max-width: 767.98px) {
+  .app-center * {
+    text-align: center;
+  }
+  .app-center div, .app-center a {
+    width: 90%;
+    margin: auto;
+  }
+}

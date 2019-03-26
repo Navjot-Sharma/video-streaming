@@ -13,7 +13,9 @@ import { Playlist } from '../shared/playlist.model';
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit, OnDestroy {
+
   isLoading = true;
+  showPanel = true;
   user: User;
   playlists: Playlist[] = [];
   playlistsSub: Subscription;

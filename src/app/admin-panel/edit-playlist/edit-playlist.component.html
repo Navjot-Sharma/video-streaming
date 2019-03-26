@@ -6,10 +6,12 @@
     Delete Playlist
   </button>
 </div>
-<mat-form-field>
+<mat-form-field class="add-video">
   <input matInput type="text" [(ngModel)]="newVideo" />
 </mat-form-field>
-<button mat-raised-button (click)="onAddVideo()">Add Video</button>
+<div class="add-button">
+  <button mat-raised-button (click)="onAddVideo()">Add Video</button>
+</div>
 
 <mat-list *ngIf="!isLoading">
   <mat-divider></mat-divider>

@@ -12,12 +12,15 @@ import { Subscription } from 'rxjs';
   animations: [fadeIn]
 })
 export class AuthComponent implements OnInit, OnDestroy {
+
   isLoading = false;
+  isRequesting = false;
   url = environment.url + 'git';
   tabIndex: number;
+  activeTab = 0;
   login = false;
   message: string;
-  signupMessage: {show: false, message: ''};
+  signupMessage = {show: false, message: ''};
   showLoginSub: Subscription;
   loginForm: FormGroup;
   signupForm: FormGroup;
@@ -29,9 +32,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSignup() {
-    if (this.signupform.value.password !== this.signupForm.value.confirmPassword) {
+    this.isRequesting = true;
+    this.activeTab = 1;
+    if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
       this.signupMessage.message = `Password and confirm password didn't match`;
-      return this.signupMessage.show = true;
+      this.signupMessage.show = true;
+      return this.isRequesting = false;
     }
     if (this.signupForm.valid) {
       delete this.signupForm.value.confirmPassword;
@@ -40,6 +46,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
+    this.isRequesting = true;
+    this.activeTab = 0;
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value);
     }
@@ -50,7 +58,13 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.showLoginSub = this.authService.getLoginSub().subscribe(response => {
       this.login = response.status;
-      this.message = response.message;
+      if (this.activeTab === 0) {
+        this.isRequesting = false;
+        return this.message = response.message;
+      }
+      this.signupMessage.message = response.message;
+      this.signupMessage.show = true;
+      this.isRequesting = false;
     });
 
     this.signupForm = new FormGroup({

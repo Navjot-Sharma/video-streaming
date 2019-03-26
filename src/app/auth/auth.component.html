@@ -8,8 +8,8 @@
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
     <mat-tab-group
       *ngIf="!isLoading"
-      dynamicHeight="true"
       mat-align-tabs="center"
+      dynamicHeight="true"
       [selectedIndex]="tabIndex"
     >
       <mat-tab label="Login">
@@ -23,7 +23,8 @@
             <input type="password" matInput formControlName="password" />
           </mat-form-field>
           <div>
-            <button mat-button type="submit">Login</button>
+            <mat-spinner [diameter]="30" *ngIf="isRequesting"></mat-spinner>
+            <button mat-button type="submit" *ngIf="!isRequesting">Login</button>
             <a class="float-right" [routerLink]="['']">Forgot password?</a>
             <span class="float-right" *ngIf="message">*{{ message }}</span>
           </div>
@@ -47,7 +48,8 @@
             <mat-label>Confirm password:</mat-label>
             <input matInput type="password" formControlName="confirmPassword" />
           </mat-form-field>
-          <button mat-button type="submit">
+          <mat-spinner [diameter]="30" *ngIf="isRequesting"></mat-spinner>
+          <button mat-button type="submit" *ngIf="!isRequesting">
             Create Account
           </button>
           <span class="float-right" *ngIf="signupMessage.show">*{{ signupMessage.message }}</span>

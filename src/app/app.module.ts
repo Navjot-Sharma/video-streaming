@@ -18,7 +18,8 @@ import {
   MatMenuModule,
   MatProgressBarModule,
   MatToolbarModule,
-  MatDividerModule
+  MatDividerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -67,6 +68,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatInputModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatToolbarModule
   ],
   providers: [
